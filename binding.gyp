@@ -34,9 +34,9 @@
           },
         }],
         [ 'OS=="linux"', {
-          'libraries': ['-lcuda'],
-          'include_dirs': ['/usr/local/include'],
-          'library_dirs': ['/usr/local/lib']
+          'libraries': ['-lcuda', '-lnvrtc'],
+          'include_dirs': ['/usr/local/cuda/include'],
+          'library_dirs': ['/usr/local/cuda/lib64']
         }],
         [ 'OS=="win"', {
           "msvs_settings": {

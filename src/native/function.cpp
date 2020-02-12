@@ -44,7 +44,20 @@ Napi::Value Function::LaunchKernel(const Napi::CallbackInfo &info)
 
   std::vector<float> numbers;
   std::vector<void *> input(array.Length());
+  // Collect float number arguments
   for (int i = 0; i < (int)array.Length(); i++)
+  {
+    Napi::Value value = array.Get(i);
+
+    if (value.IsNumber())
+    {
+      // Put the number on the array
+      float v = value.As<Napi::Number>().FloatValue();
+      numbers.push_back(v);
+    }
+  }
+  // Assemble argument pointer array
+  for (int i = 0, j = 0; i < (int)array.Length(); i++)
   {
     Napi::Value value = array.Get(i);
 
@@ -54,9 +67,8 @@ Napi::Value Function::LaunchKernel(const Napi::CallbackInfo &info)
     }
     else if (value.IsNumber())
     {
-      // Put the number on the array
-      numbers.push_back(value.As<Napi::Number>().FloatValue());
-      input[i] = numbers.data() + (numbers.size() - 1) * 4;
+      input[i] = numbers.data() + j;
+      j += 1;
     }
   }
 

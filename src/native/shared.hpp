@@ -7,6 +7,6 @@
 
 #define validate(err, env)  __validateCudaResult (err, __FILE__, __LINE__, env)
 
-extern inline bool __validateCudaResult(CUresult err, const char *file, const int line, Napi::Env env);
+extern bool __validateCudaResult(CUresult err, const char *file, const int line, Napi::Env env);
 
 #endif
